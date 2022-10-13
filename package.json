@@ -12,5 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "esbuild": "^0.15.10"
+  },
+  "dependencies": {
+    "idb": "^7.1.0",
+    "uuid": "^9.0.0"
   }
 }
