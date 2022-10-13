@@ -7,6 +7,10 @@ function setStyle(el: HTMLElement, style: Partial<CSSStyleDeclaration>) {
 }
 
 async function init() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("serviceworker.js");
+  }
+
   const root = document.getElementById("root");
   if (!root) {
     return;
@@ -15,8 +19,8 @@ async function init() {
   setStyle(root, {
     maxWidth: "800px",
     width: "100%",
-    margin: "0 auto"
-  })
+    margin: "0 auto",
+  });
 
   const noteList = document.createElement("div");
   setStyle(noteList, {
@@ -24,8 +28,8 @@ async function init() {
     overflowY: "scroll",
     overflowX: "hidden",
     display: "flex",
-    flexDirection: "column-reverse"
-  })
+    flexDirection: "column-reverse",
+  });
   root.append(noteList);
 
   const input = document.createElement("input");
@@ -33,8 +37,8 @@ async function init() {
   setStyle(input, {
     width: "100%",
     height: "30px",
-    padding: "10px"
-  })
+    padding: "10px",
+  });
   root.append(input);
 
   const NoteListItem = (note: Note) => {
@@ -56,9 +60,9 @@ async function init() {
   });
 
   const notes = await getAllNotes();
-  const sortedNotes = notes.sort((a,b) => {
+  const sortedNotes = notes.sort((a, b) => {
     return (a.createdAt as any).getTime() - (b.createdAt as any).getTime();
-  })
+  });
   for (const note of sortedNotes) {
     NoteListItem(note);
   }
