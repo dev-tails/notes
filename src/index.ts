@@ -48,14 +48,18 @@ async function init() {
   };
 
   document.addEventListener("keydown", async (e) => {
-    if (!e.shiftKey && e.key === "Enter" && input.value) {
-      const note = await addNote({
-        body: input.value,
-      });
+    if (e.key === "Enter") {
+      if (!input.value) {
+        noteList.innerHTML = "";
+      } else if (!e.shiftKey) {
+        const note = await addNote({
+          body: input.value,
+        });
 
-      input.value = "";
+        input.value = "";
 
-      NoteListItem(note);
+        NoteListItem(note);
+      }
     }
   });
 
