@@ -75,6 +75,7 @@ async function init() {
     })
     noteDiv.innerText = note.body || "";
     noteList.prepend(noteDiv);
+    return noteDiv;
   };
 
   document.addEventListener("keydown", async (e) => {
@@ -95,7 +96,8 @@ async function init() {
           body: value,
         });
 
-        NoteListItem(note);
+        const noteListItem = NoteListItem(note);
+        noteListItem.scrollIntoView();
       }
     }
   });
