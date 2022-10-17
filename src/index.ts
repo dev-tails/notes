@@ -52,11 +52,18 @@ async function init() {
       if (!input.value) {
         noteList.innerHTML = "";
       } else if (!e.shiftKey) {
-        const note = await addNote({
-          body: input.value,
-        });
-
+        const value = input.value;
         input.value = "";
+
+        if (value === "/refresh") {
+          await caches.delete("notes-v1");
+          window.location.reload();
+          return;
+        }
+
+        const note = await addNote({
+          body: value,
+        });
 
         NoteListItem(note);
       }

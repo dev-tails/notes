@@ -1,21 +1,20 @@
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open('notes-v1').then(function (cache) {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/js/notes.js',
-        '/favicon.ico'
-      ]);
-    }),
-  );
-});
+const cacheName = "notes-v1";
 
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // It can update the cache to serve updated content on the next request
-      return cachedResponse || fetch(event.request);
-    })
-  );
+  let promise = new Promise(async (resolve) => {
+    try {
+      const cachedResponse = await caches.match(event.request);
+      if (cachedResponse) {
+        return resolve(cachedResponse);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    const fetchedResponse = await fetch(event.request);
+    const cache = await caches.open(cacheName);
+    cache.put(event.request, fetchedResponse.clone());
+    resolve(fetchedResponse);
+  });
+
+  event.respondWith(promise);
 });
