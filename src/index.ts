@@ -8,8 +8,9 @@ function setStyle(el: HTMLElement, style: Partial<CSSStyleDeclaration>) {
 }
 
 async function init() {
+  let serviceWorkerRegistration: ServiceWorkerRegistration;
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("serviceworker.js");
+    serviceWorkerRegistration = await navigator.serviceWorker.register("serviceworker.js");
   }
 
   const root = document.getElementById("root");
@@ -44,8 +45,7 @@ async function init() {
   const footer = document.createElement("div");
   setStyle(footer, {
     backgroundColor: Colors.BG_LIGHT,
-    width: "100%",
-    padding: "8px 0"
+    padding: "8px"
   })
   root.append(footer);
 
@@ -62,6 +62,7 @@ async function init() {
     outline: "none",
     border: "none",
     borderBottom: "1px solid white",
+    borderRadius: "0",
     color: Colors.TEXT,
     fontSize: "1em"
   });
@@ -71,7 +72,7 @@ async function init() {
     const noteDiv = document.createElement("div");
     setStyle(noteDiv, {
       borderTop: `1px solid ${Colors.BG_LIGHT}`,
-      padding: "8px 0"
+      padding: "8px"
     })
     noteDiv.innerText = note.body || "";
     noteList.prepend(noteDiv);
@@ -88,6 +89,9 @@ async function init() {
 
         if (value === "/refresh") {
           await caches.delete("notes-v1");
+          if (serviceWorkerRegistration) {
+            await serviceWorkerRegistration.unregister();
+          }
           window.location.reload();
           return;
         }
