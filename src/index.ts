@@ -1,3 +1,4 @@
+import { Colors } from "./Colors";
 import { addNote, getAllNotes, Note } from "./db/db";
 
 function setStyle(el: HTMLElement, style: Partial<CSSStyleDeclaration>) {
@@ -16,33 +17,62 @@ async function init() {
     return;
   }
 
+  setStyle(document.body, {
+    backgroundColor: Colors.BG_DARK,
+    color: Colors.TEXT,
+    margin: "0",
+    fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`
+  })
+
   setStyle(root, {
-    maxWidth: "800px",
-    width: "100%",
-    margin: "0 auto",
+    
   });
 
   const noteList = document.createElement("div");
   setStyle(noteList, {
-    height: "calc(100vh - 50px)",
+    height: "calc(100vh - 46px)",
     overflowY: "scroll",
     overflowX: "hidden",
     display: "flex",
     flexDirection: "column-reverse",
+    maxWidth: "800px",
+    width: "100%",
+    margin: "0 auto"
   });
   root.append(noteList);
+
+  const footer = document.createElement("div");
+  setStyle(footer, {
+    backgroundColor: Colors.BG_LIGHT,
+    width: "100%",
+    padding: "8px 0"
+  })
+  root.append(footer);
 
   const input = document.createElement("input");
   input.autofocus = true;
   setStyle(input, {
+    display: "block",
     width: "100%",
+    maxWidth: "800px",
     height: "30px",
-    padding: "10px",
+    margin: "0 auto",
+    padding: "0",
+    backgroundColor: Colors.BG_LIGHT,
+    outline: "none",
+    border: "none",
+    borderBottom: "1px solid white",
+    color: Colors.TEXT,
+    fontSize: "1em"
   });
-  root.append(input);
+  footer.append(input);
 
   const NoteListItem = (note: Note) => {
     const noteDiv = document.createElement("div");
+    setStyle(noteDiv, {
+      borderTop: `1px solid ${Colors.BG_LIGHT}`,
+      padding: "8px 0"
+    })
     noteDiv.innerText = note.body || "";
     noteList.prepend(noteDiv);
   };
