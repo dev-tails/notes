@@ -1,8 +1,14 @@
 # engram Notes
 
+engram Notes is an offline-first, cloud enabled (coming soon), note taking web application. Don't be fooled by how simple it is. 
+
+## Demo
+
 [notes.engramhq.xyz](https://notes.engramhq.xyz)
 
-engram Notes is an offline-first, cloud enabled (coming soon), note taking web application. Don't be fooled by how simple it is. 
+## Home Page
+
+[engramhq.xyz](https://engramhq.xyz)
 
 ## How to Use
 
