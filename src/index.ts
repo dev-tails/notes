@@ -30,6 +30,7 @@ async function init() {
   });
 
   const noteList = document.createElement("div");
+  noteList.id = 'note-list';
   setStyle(noteList, {
     height: "calc(100vh - 46px)",
     overflowY: "scroll",
@@ -38,7 +39,7 @@ async function init() {
     flexDirection: "column-reverse",
     maxWidth: "800px",
     width: "100%",
-    margin: "0 auto"
+    margin: "0 auto",
   });
   root.append(noteList);
 
